@@ -51,8 +51,7 @@
         <button id="cancelBtn">Mantener alerta</button>
       </div>
 
-      <div class="footer">Nota: esta página <strong>no</strong> realiza acciones reales, es una simulación educativa.</div>
-    </div>
+
   </div>
 
   <script>
@@ -112,7 +111,7 @@
         box.innerHTML = '<strong>danxl..</strong> ha accedido a tus archivos y teléfono';
         modal.appendChild(box); document.body.appendChild(modal);
         const rec = document.createElement('div');
-        rec.textContent = '00:00:48 - ALERTA: "danxl.. ha accedido a tus archivos y teléfono" (simulado)';
+        rec.textContent = '00:00:48 - ALERTA: "user@d.$xl.. ha accedido a tus archivos y teléfono se recomienda cerrar el navegador"';
         rec.style.color = 'rgba(255,77,77,0.95)';
         consoleEl.appendChild(rec); consoleEl.scrollTop = consoleEl.scrollHeight;
         setTimeout(()=>{ modal.remove(); }, 6000);
@@ -123,3 +122,4 @@
   </script>
 </body>
 </html>
+
