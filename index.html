@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Reporte de Seguridad — Sistema</title>
+  <style>
+    :root{--bg:#0b0b0b;--red:#ff2d2d;--muted:#bfbfbf}
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,#080808,#0e0e0e);font-family:Inter,Segoe UI,Arial,Helvetica,sans-serif;color:var(--muted)}
+    .center{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+    .card{width:min(900px,96%);background:rgba(0,0,0,0.6);border:1px solid rgba(255,0,0,0.06);padding:28px;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,0.7)}
+    .headline{color:var(--red);font-size:clamp(24px,4vw,40px);letter-spacing:1px;margin:0}
+    .sub{color:rgba(191,191,191,0.8);margin-top:8px}
+    .console{margin-top:18px;background:#020202;border-radius:8px;padding:16px;color:#e6e6e6;font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', 'Courier New', monospace;font-size:13px;line-height:1.5;max-height:340px;overflow:auto}
+    .blink{animation:blink 1s steps(2,start) infinite}
+    @keyframes blink{50%{opacity:0}}
+    .footer{margin-top:14px;font-size:13px;color:rgba(191,191,191,0.6)}
+    /* make sure nothing external loads */
+  </style>
+</head>
+<body>
+  <div class="center">
+    <div class="card" role="main">
+      <h1 class="headline">ACCESO NO AUTORIZADO</h1>
+      <p class="sub">Se han detectado múltiples intentos de intrusión en el sistema. Comunicando a equipo local...</p>
+
+      <div class="console" aria-live="polite" id="console">
+        <div>00:00:01 - origen: 10.0.0.42 — escaneo de puertos detectado</div>
+        <div>00:00:04 - integridad de binarios: discrepancia en /bin/secure</div>
+        <div>00:00:08 - actividad anómala: procesos sin firma</div>
+        <div class="blink">00:00:12 - ALERTA: se requiere intervención inmediata</div>
+        <div>00:00:16 - auditoría: creando registro local (simulado)</div>
+        <div>00:00:20 - bloqueo de sesiones iniciado — acceso restringido</div>
+      </div>
+
+      <div class="footer">Nota: esta página <strong>no</strong> realiza cambios en el sistema ni envía datos. Es solo una visualización estática para fines educativos.</div>
+    </div>
+  </div>
+
+  <script>
+    // This script only animates text locally. It performs NO network activity and NO file operations.
+    (function(){
+      const consoleEl = document.getElementById('console');
+      const more = [
+        '00:00:24 - intentos de autenticación: 7',
+        '00:00:28 - intento de escalada de privilegios detectado',
+        '00:00:32 - conexiones salientes bloqueadas (simulado)'
+      ];
+      let i = 0;
+      function addLine(){
+        if(i >= more.length) return;
+        const d = document.createElement('div'); d.textContent = more[i++];
+        consoleEl.appendChild(d);
+        consoleEl.scrollTop = consoleEl.scrollHeight;
+        setTimeout(addLine, 1200);
+      }
+      setTimeout(addLine, 1500);
+    })();
+
+
+    // Prevent accidental form submissions or network calls
+    // No external resources, no clipboard, no downloads, no service workers.
+  </script>
+</body>
+</html>
