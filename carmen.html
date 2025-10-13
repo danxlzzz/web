@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Informe Escolar</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+<div id="contenedor">
+  <!-- Datos del alumno -->
+  <div class="datos-alumno">
+    <div contenteditable="true">
+      <div class="etiqueta">Nombre del alumn@</div>
+      <div>__________________________</div>
+    </div>
+    <div contenteditable="true">
+      <div class="etiqueta">Fecha de nacimiento</div>
+      <div>__/__/____</div>
+    </div>
+    <div contenteditable="true">
+      <div class="etiqueta">Grupo</div>
+      <div>__________</div>
+    </div>
+  </div>
+
+  <!-- Tabla de campos formativos -->
+  <table>
+    <tr>
+      <th class="campo">Campo<br>formativo</th>
+      <th>Observaciones</th>
+      <th>Sugerencias</th>
+    </tr>
+    <tr>
+      <td class="campo">Lenguajes</td>
+      <td contenteditable="true">Escribe aquí las observaciones para Lenguajes...</td>
+      <td contenteditable="true">Escribe aquí las sugerencias para Lenguajes...</td>
+    </tr>
+    <tr>
+      <td class="campo">Saberes y pensamiento científico</td>
+      <td contenteditable="true">Escribe aquí las observaciones para Saberes y pensamiento científico...</td>
+      <td contenteditable="true">Escribe aquí las sugerencias para Saberes y pensamiento científico...</td>
+    </tr>
+    <tr>
+      <td class="campo">Ética, naturaleza y sociedades</td>
+      <td contenteditable="true">Escribe aquí las observaciones para Ética, naturaleza y sociedades...</td>
+      <td contenteditable="true">Escribe aquí las sugerencias para Ética, naturaleza y sociedades...</td>
+    </tr>
+    <tr>
+      <td class="campo">De lo humano y lo comunitario</td>
+      <td contenteditable="true">Escribe aquí las observaciones para De lo humano y lo comunitario...</td>
+      <td contenteditable="true">Escribe aquí las sugerencias para De lo humano y lo comunitario...</td>
+    </tr>
+  </table>
+
+  <!-- Firmas -->
+  <div class="footer">
+    <div contenteditable="true">
+      <div class="etiqueta">Nombre y firma del docente</div>
+      <div>_____________________</div>
+    </div>
+    <div contenteditable="true">
+      <div class="etiqueta">Firma de la madre, padre o tutor</div>
+      <div>_____________________</div>
+    </div>
+  </div>
+</div>
+
+<!-- Botón para guardar como imagen -->
+<button class="boton no-print" onclick="guardarComoImagen()">Guardar como imagen</button>
+
+<!-- html2canvas CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+  function guardarComoImagen() {
+    html2canvas(document.querySelector("#contenedor"), {
+      ignoreElements: el => el.classList && el.classList.contains('no-print')
+    }).then(canvas => {
+      const link = document.createElement('a');
+      link.download = 'informe_escolar.png';
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    });
+  }
+</script>
+
+</body>
+</html>
