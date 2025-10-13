@@ -1,88 +1,124 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Informe Escolar</title>
-  <link rel="stylesheet" href="estilos.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Simulación de Acceso</title>
+  <style>
+    :root{--bg:#0b0b0b;--red:#ff2d2d;--muted:#bfbfbf;--green:#2dd45a}
+    html,body{height:100%;margin:0;background:#000;font-family:Inter,Segoe UI,Arial,Helvetica,sans-serif;color:var(--muted)}
+    .intro, .main{display:flex;align-items:center;justify-content:center;min-height:100vh;}
+    .intro img{max-width:90%;border-radius:12px;box-shadow:0 0 25px rgba(255,255,255,0.1);}
+    .hidden{display:none;}
+
+    .card{width:min(900px,96%);background:rgba(0,0,0,0.6);border:1px solid rgba(255,0,0,0.06);padding:28px;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,0.7)}
+    .headline{color:var(--red);font-size:clamp(24px,4vw,40px);letter-spacing:1px;margin:0;transition:color 400ms ease, transform 400ms ease}
+    .sub{color:rgba(191,191,191,0.8);margin-top:8px;transition:color 400ms ease}
+    .console{margin-top:18px;background:#020202;border-radius:8px;padding:16px;color:#e6e6e6;font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', 'Courier New', monospace;font-size:13px;line-height:1.5;max-height:340px;overflow:auto}
+    .blink{animation:blink 1s steps(2,start) infinite}
+    @keyframes blink{50%{opacity:0}}
+    .footer{margin-top:14px;font-size:13px;color:rgba(191,191,191,0.6)}
+    .btns{margin-top:12px;display:flex;gap:8px}
+    button{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted);padding:8px 10px;border-radius:6px;cursor:pointer}
+    button.primary{border-color:rgba(45,212,90,0.14);color:var(--green)}
+    .modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);}
+    .modal .box{background:#111;padding:18px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);max-width:90%;color:#fff}
+  </style>
 </head>
 <body>
-
-<div id="contenedor">
-  <!-- Datos del alumno -->
-  <div class="datos-alumno">
-    <div contenteditable="true">
-      <div class="etiqueta">Nombre del alumn@</div>
-      <div>__________________________</div>
-    </div>
-    <div contenteditable="true">
-      <div class="etiqueta">Fecha de nacimiento</div>
-      <div>__/__/____</div>
-    </div>
-    <div contenteditable="true">
-      <div class="etiqueta">Grupo</div>
-      <div>__________</div>
-    </div>
+  <!-- Intro -->
+  <div class="intro" id="intro">
+    <img src="https://i.pinimg.com/474x/98/7b/36/987b36024dc027f9ef4ee4033bb1f0f8.jpg" alt="sticker" />
   </div>
 
-  <!-- Tabla de campos formativos -->
-  <table>
-    <tr>
-      <th class="campo">Campo<br>formativo</th>
-      <th>Observaciones</th>
-      <th>Sugerencias</th>
-    </tr>
-    <tr>
-      <td class="campo">Lenguajes</td>
-      <td contenteditable="true">Escribe aquí las observaciones para Lenguajes...</td>
-      <td contenteditable="true">Escribe aquí las sugerencias para Lenguajes...</td>
-    </tr>
-    <tr>
-      <td class="campo">Saberes y pensamiento científico</td>
-      <td contenteditable="true">Escribe aquí las observaciones para Saberes y pensamiento científico...</td>
-      <td contenteditable="true">Escribe aquí las sugerencias para Saberes y pensamiento científico...</td>
-    </tr>
-    <tr>
-      <td class="campo">Ética, naturaleza y sociedades</td>
-      <td contenteditable="true">Escribe aquí las observaciones para Ética, naturaleza y sociedades...</td>
-      <td contenteditable="true">Escribe aquí las sugerencias para Ética, naturaleza y sociedades...</td>
-    </tr>
-    <tr>
-      <td class="campo">De lo humano y lo comunitario</td>
-      <td contenteditable="true">Escribe aquí las observaciones para De lo humano y lo comunitario...</td>
-      <td contenteditable="true">Escribe aquí las sugerencias para De lo humano y lo comunitario...</td>
-    </tr>
-  </table>
+  <!-- Main -->
+  <div class="main hidden" id="main">
+    <div class="card" role="main">
+      <h1 id="headline" class="headline">ACCESO NO AUTORIZADO</h1>
+      <p id="subtitle" class="sub">Se han detectado múltiples intentos de intrusión en el sistema. Comunicando a equipo local...</p>
 
-  <!-- Firmas -->
-  <div class="footer">
-    <div contenteditable="true">
-      <div class="etiqueta">Nombre y firma del docente</div>
-      <div>_____________________</div>
-    </div>
-    <div contenteditable="true">
-      <div class="etiqueta">Firma de la madre, padre o tutor</div>
-      <div>_____________________</div>
-    </div>
+      <div class="console" aria-live="polite" id="console">
+        <div>00:00:01 - origen: 10.0.0.42 — escaneo de puertos detectado</div>
+        <div>00:00:04 - integridad de binarios: discrepancia en /bin/secure</div>
+        <div>00:00:08 - actividad anómala: procesos sin firma</div>
+        <div id="alertLine" class="blink">00:00:12 - ALERTA: se requiere intervención inmediata</div>
+        <div>00:00:16 - auditoría: creando registro local </div>
+        <div>00:00:20 - bloqueo de sesiones iniciado — acceso restringido</div>
+      </div>
+
+      <div class="btns">
+        <button id="blockBtn" class="primary">Bloquear usuario</button>
+        <button id="cancelBtn">Mantener alerta</button>
+      </div>
+
+
   </div>
-</div>
 
-<!-- Botón para guardar como imagen -->
-<button class="boton no-print" onclick="guardarComoImagen()">Guardar como imagen</button>
+  <script>
+    // Mostrar intro y luego cambiar al reporte
+    setTimeout(()=>{
+      document.getElementById('intro').classList.add('hidden');
+      document.getElementById('main').classList.remove('hidden');
+    }, 4000); // 4 segundos
 
-<!-- html2canvas CDN -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script>
-  function guardarComoImagen() {
-    html2canvas(document.querySelector("#contenedor"), {
-      ignoreElements: el => el.classList && el.classList.contains('no-print')
-    }).then(canvas => {
-      const link = document.createElement('a');
-      link.download = 'informe_escolar.png';
-      link.href = canvas.toDataURL("image/png");
-      link.click();
-    });
-  }
-</script>
+    (function(){
+      const consoleEl = document.getElementById('console');
+      const headline = document.getElementById('headline');
+      const subtitle = document.getElementById('subtitle');
+      const alertLine = document.getElementById('alertLine');
+      const more = [
+        '00:00:24 - intentos de autenticación: 7',
+        '00:00:28 - intento de escalada de privilegios detectado',
+        '00:00:32 - conexiones salientes bloqueadas'
+      ];
+      let i = 0;
+      function addLine(){
+        if(i >= more.length) return;
+        const d = document.createElement('div'); d.textContent = more[i++]; consoleEl.appendChild(d);
+        consoleEl.scrollTop = consoleEl.scrollHeight;
+        setTimeout(addLine, 1200);
+      }
+      setTimeout(addLine, 1500);
 
+      const AUTO_DELAY_MS = 12000;
+      let forced = false;
+
+      function applyForcedAccess(){
+        if(forced) return;
+        forced = true;
+        headline.textContent = 'ACCESO AUTORIZADO FORZADO';
+        headline.style.color = 'var(--green)';
+        headline.style.transform = 'scale(1.02)';
+        subtitle.textContent = 'Autorización forzada detectada. Revisar registros y revocar acceso si es necesario.';
+        subtitle.style.color = 'rgba(45,212,90,0.9)';
+        alertLine.classList.remove('blink');
+        const ok1 = document.createElement('div'); ok1.textContent = '00:00:36 - verificación de token: VALIDO (forzado)';
+        const ok2 = document.createElement('div'); ok2.textContent = '00:00:40 - sesión establecida: root';
+        const ok3 = document.createElement('div'); ok3.textContent = '00:00:44 - ACCESO AUTORIZADO (FORZADO)'; ok3.style.color = 'rgba(45,212,90,0.95)';
+        consoleEl.appendChild(ok1); consoleEl.appendChild(ok2); consoleEl.appendChild(ok3);
+        consoleEl.scrollTop = consoleEl.scrollHeight;
+      }
+
+      const autoTimer = setTimeout(applyForcedAccess, AUTO_DELAY_MS);
+
+      const blockBtn = document.getElementById('blockBtn');
+      const cancelBtn = document.getElementById('cancelBtn');
+
+      blockBtn.addEventListener('click', ()=>{
+        clearTimeout(autoTimer);
+        const modal = document.createElement('div'); modal.className='modal';
+        const box = document.createElement('div'); box.className='box';
+        box.innerHTML = '<strong>danxl..</strong> ha accedido a tus archivos y teléfono';
+        modal.appendChild(box); document.body.appendChild(modal);
+        const rec = document.createElement('div');
+        rec.textContent = '00:00:48 - ALERTA: "user@d.$xl.. ha accedido a tus archivos y teléfono se recomienda cerrar el navegador"';
+        rec.style.color = 'rgba(255,77,77,0.95)';
+        consoleEl.appendChild(rec); consoleEl.scrollTop = consoleEl.scrollHeight;
+        setTimeout(()=>{ modal.remove(); }, 6000);
+      });
+
+      cancelBtn.addEventListener('click', ()=>{ clearTimeout(autoTimer); alertLine.classList.remove('blink'); alert('Mantendremos la alerta en pantalla.'); });
+    })();
+  </script>
 </body>
 </html>
